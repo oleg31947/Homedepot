@@ -1,0 +1,16 @@
+behave
+selenium
+allure-behave
+allure-python-commons
+pip
+zipp
+urllib3
+six
+setuptools
+pluggy
+pause
+more-itertools
+importlib-metadata
+
+
+
