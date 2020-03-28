@@ -34,5 +34,8 @@ class SignIn(Page):
     def click_submit(self):
         self.click(*self.SUBMIT)
 
-    def verify_registration(self, text, ):
-        self.verify_text(text, *self.YOU_REGISTERED)
+    def verify_registration(self, text):
+        self.verify_exectly_text(text, *self.YOU_REGISTERED)
+
+    def verify_chenge_windows(self, url):
+        self.verify_change_windows(url)

@@ -41,6 +41,6 @@ def fill_out_phone(context, fake_phone):
 def click_submit(context):
     context.app.sign_in_page.click_submit()
 
-@then("Expected registration {text}")
-def verify_registration(context, text):
-    context.app.sign_in_page.verify_registration(text)
+@then("Expected registration will be complete successfully {url}")
+def verify_registration_url(context, url):
+    context.app.sign_in_page.verify_change_windows(url)

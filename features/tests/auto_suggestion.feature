@@ -31,7 +31,7 @@ Feature: Auto-suggestion
     And Fill zip code field with 98661
     And Fill Phone field with 5038050714
     And Click submit
-    Then Expected registration You're Registered!,,
+    Then Expected registration will be complete successfully https://www.homedepot.com/
 
 
 

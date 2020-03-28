@@ -48,3 +48,8 @@ class Page:
         print(f'actual result is: {actual_text}')
         print(f'expected result is: {expected_text}')
         assert expected_text in actual_text, f'Expected text {expected_text}, but got (actual_text)'
+
+    def verify_change_windows(self, url):
+        self.driver.wait.until(EC.new_window_is_opened)
+        current_url = self.driver.current_url
+        assert current_url != url, f'Expected result was {current_url} not equal {url}'
