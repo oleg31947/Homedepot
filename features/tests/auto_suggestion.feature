@@ -27,13 +27,25 @@ Feature: Auto-suggestion
     When Click account button
     And Click 'register' button
     And Fill email field with oleg31950@gmail.com
-    And Fill password field with <12345th78>
+    And Fill password field with 12345th78
     And Fill zip code field with 98661
     And Fill Phone field with 5038050714
+    And Verify my mobile number, click
     And Click submit
     Then Expected registration will be complete successfully https://www.homedepot.com/
 
-
+  Scenario: Verify that Sign-In with existing account works
+    Given Open Homedepot page
+    When Click account button
+    And Check button Sign out
+    And Click 'register' button
+    And Fill email field with oleg31950@gmail.com
+    And Fill password field with 12345th78
+    And Fill zip code field with 98661
+    And Fill Phone field with 5038050714
+    And Click submit
+    Then Expected login will be complete successfully https://www.homedepot.com/customer/auth/v1/signin
+    #Then Expected login will be complete successfully https://www.homedepot.com/customer/auth/v1/register
 
 
 

@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.select import Select
 from time import sleep
+import requests
 
 @when("Click on search button and wait a couple of seconds")
 def click_wait(context):
@@ -37,10 +38,27 @@ def fill_out_zip(context, fake_zip):
 def fill_out_phone(context, fake_phone):
     context.app.sign_in_page.fill_password(fake_phone)
 
+@when("Verify my mobile number, click")
+def verify_by_mobile(context):
+    context.app.sign_in_page.verify_by_mobile()
+
 @when("Click Submit")
 def click_submit(context):
     context.app.sign_in_page.click_submit()
 
+@when("Check button {text2}")
+def check_sign_out(context, text2):
+    context.app.sign_in_page.check_sign_out(text2)
+
+
+# @then("Verify {text}")
+# def verify_email_registred(context, text):
+#     context.app.sign_in_page.verify_email_registred(text)
+
 @then("Expected registration will be complete successfully {url}")
 def verify_registration_url(context, url):
     context.app.sign_in_page.verify_change_windows(url)
+
+@then ("Expected login will be complete successfully {url}")
+def verify_log_in(context, url):
+    context.app.sign_in_page.verify_log_in(url)

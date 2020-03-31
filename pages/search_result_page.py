@@ -3,7 +3,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import Page
 from time import sleep
-
 SEARCH_FIELD = (By.CSS_SELECTOR, "input#headerSearch.SearchBox__input")
 
 class SearchResults(Page):
