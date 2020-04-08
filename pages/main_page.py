@@ -8,6 +8,9 @@ class MainPage(Page):
     CLICK_OBJECT = (By.CSS_SELECTOR, "div.Header3__groupItem.Header3__groupItem--center a#headerMyAccount")
     BTN = (By.CSS_SELECTOR, "button#headerSearchButton")
 
+    def open_home_page(self):
+        self.open_url()
+
     def click_wait(self):
         #context.driver.wait.until(EC.element_to_be_clickable(BTN)).click()
         self.click(*self.BTN)

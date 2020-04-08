@@ -8,6 +8,7 @@ import requests
 
 class SignIn(Page):
     REGISTER = (By.CSS_SELECTOR, "a.bttn-outline")
+    CART = (By.CSS_SELECTOR, "a#headerCart span.MyCart__label")
     E_MAIL = (By.CSS_SELECTOR, "input#email")
     PASSWORD = (By.CSS_SELECTOR, "input#password-input-field")
     ZIP = (By.CSS_SELECTOR, "input#zipCode")
@@ -21,6 +22,9 @@ class SignIn(Page):
 
     def click_register(self):
         self.click(*self.REGISTER)
+
+    def click_cart(self):
+        self.click(*self.CART)
 
     def fill_out_email(self, text):
         self.input_text(text, *self.E_MAIL)

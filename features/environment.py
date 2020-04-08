@@ -2,6 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from features.application import Application
 
+bs_user = "olegmorozov1"
+bs_pw = "YNfQosLfxu4X6zkzYkpY"
 
 
 def browser_init(context):
@@ -12,11 +14,24 @@ def browser_init(context):
     # context.driver = webdriver.Safari()
     # context.driver = webdriver.Firefox(executable_path='drivers/geckodriver.exe')
 
+
+    ### BrowserStack ###
+    # desired_cap = {
+    #     'browser': 'Safari',
+    #     'browser_version': '13.0',
+    #     'os': 'OS X',
+    #     'os_version': 'Catalina',
+    #     'name': 'Verify that Sign-In with existing account works'
+    # }
+    #
+    # url = f'http://{bs_user}:{bs_pw}@hub-cloud.browserstack.com/wd/hub'
+    # context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
+
+
     # context.driver.maximize_window()
-    context.driver.implicitly_wait(15)
+    context.driver.implicitly_wait(10)
     context.driver.wait = WebDriverWait(context.driver, 25)
     context.app = Application(context.driver)
-
 
 def before_scenario(context, scenario):
     print('\nStarted scenario: ', scenario.name)

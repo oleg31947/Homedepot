@@ -11,17 +11,19 @@ RESULTS_FOUND = (By.CSS_SELECTOR, "div.page-header.u__truncate")
 
 @then("Verify {search_words} is shown.")
 def verify_result_search(context, search_words):
-    #context.app.product_page.verify_result_search(search_words)
     #name_result = context.driver.find_elements(*RESULTS_FOUND)[0].text
+    # name_result = context.driver.wait.until(EC.presence_of_all_elements_located(RESULTS_FOUND))[0].text
+    name_result = context.driver.wait.until(EC.visibility_of_any_elements_located(RESULTS_FOUND))[0].text
 
-    name_result = context.driver.wait.until(EC.presence_of_all_elements_located(RESULTS_FOUND))[0].text
-    print(f" '/n {name_result}")
+    print(f" Actual result are:  {name_result}")
+    print(f" Expected result is: {search_words}")
 
-
-    # print(f" '/n actual {name_result}")
-    # print(f" '/n expected {search_words}")
-    #
     assert search_words in name_result, f'Expected word {search_words} in message, but got {name_result}.'
+
+    # e = 0
+    # if step.status == 'true':
+    #     e += 1
+    # return (print(f'We actualy have {e} items'))
     # # if assert is True:
 
     # return sum(assert True)
