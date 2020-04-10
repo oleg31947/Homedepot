@@ -46,12 +46,12 @@ Feature: Auto-suggestion
     And Verify my mobile number, click
     And Click submit
     Then Expected login will be complete successfully https://www.homedepot.com/customer/auth/v1/signin
-    # Then Expected login will be complete successfully https://www.homedepot.com/customer/auth/v1/register
 
   Scenario: Shopping cart - empty state
     Given Open Homedepot page
     When Click 'cart' button
-    Then Expected cart page will have empty in the title Your shopping cart is empty.
+    Then Expected cart page will have the title: Cart 0 items
+
 
   Scenario: User is able to add an item to the Shopping Cart
     Given Open Homedepot page
@@ -67,12 +67,11 @@ Feature: Auto-suggestion
   When Insert circular saw in search field
   And 1 product added to shopping cart
   And Return to product search page
-#  And On search results page choose another product and click it
   And Insert drill in search field
   And 1 product added to shopping cart
+  And Return to product search page
   And Click cart button
-  Then Try expect items in cart will be 2
-#  Then Expect 2 Item
+  Then Expected cart page will have the title: Cart 2 items
 #  Then Close all pop-ups
 
   Scenario: Shopping cart - Change quantity
@@ -87,9 +86,9 @@ Feature: Auto-suggestion
   Scenario: User is able to write a review
   Given Open Homedepot page
   When Insert hammer in search field
-  And On search results page choose something and click it
-  And click "write review" button
-  Then expected product has "write review" button
+  And On search results page choose stars and click
+  And Click 'write review' button
+  Then Expected product has Write A Review button
 
 
 

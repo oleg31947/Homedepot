@@ -10,7 +10,6 @@ from time import sleep
 class Product(Page):
 
     RESULTS_FOUND = (By.CSS_SELECTOR, "h1 span.original-keyword")
-    EMTY_CART = (By.XPATH, ".//div[@id='root']//p[text()='Your shopping cart is empty.']")
     SEARCH_FILD_SECOND = (By.CSS_SELECTOR, "input#headerSearch")
     # SEARCH_FILD = (By.CSS_SELECTOR, "input.SearchBox__input#headerSearch")
     SEARCH_CLICK = (By.CSS_SELECTOR, "button#headerSearchButton")
@@ -23,11 +22,13 @@ class Product(Page):
     IFRAME_CLOSE = (By.CSS_SELECTOR, "div.col__2-12.u__text-align--right")
     # IFRAME_CLOSE = (By.CSS_SELECTOR, "svg[viewBox='0 0 32 32']")
     CART_BUTTON = (By.CSS_SELECTOR, "a#headerCart")
-    QUANTITY_WINDOWS = (
-    By.CSS_SELECTOR, "input.cartItem__qtyInput.form-input__field.u__left.padding_left-10.padding_right-10")
+    QUANTITY_WINDOWS = (By.CSS_SELECTOR, "input.cartItem__qtyInput.form-input__field.u__left.padding_left-10.padding_right-10")
     CHECK_OUT = (By.XPATH, ".//div[@data-automation-id='appCheckoutOptionsContainer']//span[text()='Checkout ']")
     # VIEW_CART = (By.CSS_SELECTOR, "section span#editCartLinkItemCount")
     VIEW_CART = (By.CSS_SELECTOR, "a#headerCart span.MyCart__itemCount")
+    PRODUCT_STARS = (By.CSS_SELECTOR, "div a span.stars")
+    WRITE_BUTTON = (By.XPATH, ".//button//span[text()='Write a Review']")
+    WRITE_TEXT = (By.XPATH, ".//h2[text()='Write A Review']")
 
 
     def search_product(self, product):
@@ -48,7 +49,6 @@ class Product(Page):
     def verify_product_in_cart(self, expected_text):
         frame = self.driver.find_elements(*self.FRAME)[1]
         self.driver.switch_to.frame(frame)
-
         self.verify_exactly_text(expected_text, *self.ADDED_TO_CART)
         # self.verify_one_text(expected_text, *self.ADDED_TO_CART)
         # sleep(7)
@@ -60,13 +60,21 @@ class Product(Page):
         frame = self.driver.find_elements(*self.FRAME)[1]
         self.driver.wait.until(EC.frame_to_be_available_and_switch_to_it(frame))
         # self.driver.switch_to.frame(frame)
-        # sleep(5)
-        self.driver.find_element(*self.IFRAME_CLOSE).click()
-        # self.driver.wait.until(EC.element_to_be_clickable(self.IFRAME_CLOSE)).click()
+        sleep(3)
+        # self.driver.find_element(*self.IFRAME_CLOSE).click()
+        self.driver.wait.until(EC.visibility_of_element_located(self.IFRAME_CLOSE)).click()
 
     def click_cart_button(self):
-        sleep(2)
+        # self.driver.switch_to_default_content()
+        sleep(3)
         self.simple_click(*self.CART_BUTTON)
+        # self.click(*self.CART_BUTTON)
+
+
+    def click_review_button(self):
+        sleep(2)
+        self.multy_click(*self.WRITE_BUTTON)
+
 
     def change_quantity(self, number_1, number_2):
         if number_1 == 1:
@@ -88,15 +96,14 @@ class Product(Page):
         self.driver.back()
         self.verify_exactly_text(items, *self.VIEW_CART)
 
-    # def wait_until_iframe_not_visible(self):
-
-
     # def close_all_pop_ups(self):
     #     alert = self.driver.switch_to.alert
     #     if alert.is_displayed():
     #         alert.accept()
 
-
+    def click_stars(self):
+        self.multy_click(*self.PRODUCT_STARS)
+        self.driver.wait.until(EC.new_window_is_opened)
 
 
         # self.driver.wait.until(EC.new_window_is_opened)
@@ -109,11 +116,14 @@ class Product(Page):
         self.verify_text(text, *self.RESULTS_FOUND)
 
     def verify_empty_cart(self, expected_text):
-        self.verify_exactly_text(expected_text, *self.EMTY_CART)
+        self.verify_exactly_text(expected_text, *self.CART_BUTTON)
+
+    def product_button(self, name):
+        self.verify_exactly_text(name, *self.WRITE_TEXT)
 
     # def verify_product_in_cart(self):
 
-    def count_assert(self, step):
-        self.after_step_page(step)
-        # self.count_positive_passed_assert()
+    # def count_assert(self, step):
+    #     self.after_step_page(step)
+    #     # self.count_positive_passed_assert()
 

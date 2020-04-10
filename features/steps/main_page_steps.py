@@ -73,6 +73,10 @@ def return_product_page(context):
 def click_cart_button(context):
     context.app.product_page.click_cart_button()
 
+@when("Click 'write review' button")
+def click_cart_button(context):
+    context.app.product_page.click_review_button()
+
 @when("{expected_text} product added to shopping cart")
 def add_product_cart(context, expected_text):
     expected_text = int(expected_text)
@@ -83,6 +87,15 @@ def change_quantity(context, number_1, number_2):
     context.app.product_page.change_quantity(number_1, number_2)
     number_1 = int(number_1)
     number_2 = int(number_2)
+
+@when("On search results page choose stars and click")
+def click_stars(context):
+    context.app.product_page.click_stars()
+
+@then("Expected product has {name} button")
+def product_button(context, name):
+    context.app.product_page.product_button(name)
+
 
 @then("Try expect items in cart will be {items}")
 def expect_item_in_cart(context, items ):
@@ -124,7 +137,7 @@ def verify_registration_url(context, url):
 def verify_log_in(context, url):
     context.app.sign_in_page.verify_log_in(url)
 
-@then("Expected cart page will have empty in the title{expected_text}")
+@then("Expected cart page will have the title: {expected_text}")
 def verify_empty_cart(context, expected_text):
     context.app.product_page.verify_empty_cart(expected_text)
 
