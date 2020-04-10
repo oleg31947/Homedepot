@@ -13,6 +13,9 @@ class Page:
        self.driver.implicitly_wait(10)
        self.action = ActionChains(self.driver)
 
+    def simple_click(self, *locator):
+        self.driver.find_element(*locator).click()
+
     def click(self, *locator):
         e = self.driver.wait.until(EC.element_to_be_clickable(locator))
         e.click()
@@ -46,7 +49,7 @@ class Page:
         # e.send_keys(number)
 
     def input_text(self, product, *locator):
-        e = self.driver.wait.until(EC.element_to_be_clickable(locator))
+        e = self.driver.wait.until(EC.visibility_of_element_located(locator))
         e.clear()
         e.send_keys(product)
 
@@ -80,7 +83,7 @@ class Page:
         print(type(actual_text))
         print(f'expected {expected_text}')
         print(type(expected_text))
-        assert expected_text == actual_text, f'Expected text {expected_text}, but got {actual_text}'
+        assert expected_text in actual_text, f'Expected text {expected_text}, but got {actual_text}'
 
     def verify_exactly_text(self, expected_text, *locator):
         actual_text = self.driver.wait.until(EC.visibility_of_any_elements_located(locator))[0].text

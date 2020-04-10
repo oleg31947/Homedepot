@@ -11,8 +11,8 @@ class Product(Page):
 
     RESULTS_FOUND = (By.CSS_SELECTOR, "h1 span.original-keyword")
     EMTY_CART = (By.XPATH, ".//div[@id='root']//p[text()='Your shopping cart is empty.']")
-    SEARCH_FILD_SECOND = (By.ID, "#headerSearch")
-    SEARCH_FILD = (By.CSS_SELECTOR, "input.SearchBox__input#headerSearch")
+    SEARCH_FILD_SECOND = (By.CSS_SELECTOR, "input#headerSearch")
+    # SEARCH_FILD = (By.CSS_SELECTOR, "input.SearchBox__input#headerSearch")
     SEARCH_CLICK = (By.CSS_SELECTOR, "button#headerSearchButton")
     SEARCH_CLICK_SECOND = (By.CSS_SELECTOR,"button#headerSearchButton")
     ADD_CART = (By.XPATH, ".//div[@class=' pod-plp__atc-bttn']//span[text()='Add to Cart']")
@@ -21,15 +21,24 @@ class Product(Page):
     ADDED_TO_CART = (By.XPATH, ".//header//span[text()='1 Item Added to Cart']")
     FRAME = (By.CSS_SELECTOR, "iframe.thd-overlay-frame")
     IFRAME_CLOSE = (By.CSS_SELECTOR, "div.col__2-12.u__text-align--right")
+    # IFRAME_CLOSE = (By.CSS_SELECTOR, "svg[viewBox='0 0 32 32']")
+    CART_BUTTON = (By.CSS_SELECTOR, "a#headerCart")
+    QUANTITY_WINDOWS = (
+    By.CSS_SELECTOR, "input.cartItem__qtyInput.form-input__field.u__left.padding_left-10.padding_right-10")
+    CHECK_OUT = (By.XPATH, ".//div[@data-automation-id='appCheckoutOptionsContainer']//span[text()='Checkout ']")
+    # VIEW_CART = (By.CSS_SELECTOR, "section span#editCartLinkItemCount")
+    VIEW_CART = (By.CSS_SELECTOR, "a#headerCart span.MyCart__itemCount")
 
 
     def search_product(self, product):
-        self.input_text(product, *self.SEARCH_FILD)
-        self.click(*self.SEARCH_CLICK)
-
-    def search_product_second(self, product):
+        # self.driver.wait.until(EC.new_window_is_opened)
+        sleep(2)
         self.input_text(product, *self.SEARCH_FILD_SECOND)
         self.click(*self.SEARCH_CLICK)
+
+    # def search_product_second(self, product):
+    #     self.input_text(product, *self.SEARCH_FILD_SECOND)
+    #     self.click(*self.SEARCH_CLICK)
 
     def add_product_cart(self, expected_text):
         self.multy_click(*self.ADD_CART)
@@ -42,13 +51,42 @@ class Product(Page):
 
         self.verify_exactly_text(expected_text, *self.ADDED_TO_CART)
         # self.verify_one_text(expected_text, *self.ADDED_TO_CART)
-        sleep(7)
-
-
-        self.driver.find_element(*self.IFRAME_CLOSE).click()
-
+        # sleep(7)
+        # self.driver.find_element(*self.IFRAME_CLOSE).click()
+        self.driver.wait.until(EC.visibility_of_element_located(self.IFRAME_CLOSE)).click()
         # self.driver.switch_to_default_content()
 
+    def return_product_page(self):
+        frame = self.driver.find_elements(*self.FRAME)[1]
+        self.driver.wait.until(EC.frame_to_be_available_and_switch_to_it(frame))
+        # self.driver.switch_to.frame(frame)
+        # sleep(5)
+        self.driver.find_element(*self.IFRAME_CLOSE).click()
+        # self.driver.wait.until(EC.element_to_be_clickable(self.IFRAME_CLOSE)).click()
+
+    def click_cart_button(self):
+        sleep(2)
+        self.simple_click(*self.CART_BUTTON)
+
+    def change_quantity(self, number_1, number_2):
+        if number_1 == 1:
+            number_1 = 'True'
+        else:
+            self.input_text(number_1, *self.QUANTITY_WINDOWS)
+        self.input_text(number_2, *self.QUANTITY_WINDOWS)
+
+
+    def expect_items_in_cart(self, items):
+        self.multy_click(*self.CHECK_OUT)
+
+        # alert = self.driver.switch_to.alert
+        # if alert.is_displayed():
+        #     alert.dismiss()
+
+        # self.driver.wait.until(EC.alert_is_present)
+        # self.driver.switch_to.alert().dismiss()
+        self.driver.back()
+        self.verify_exactly_text(items, *self.VIEW_CART)
 
     # def wait_until_iframe_not_visible(self):
 

@@ -65,14 +65,30 @@ def check_sign_out(context, text2):
 def search_product(context, product):
     context.app.product_page.search_product(product)
 
+@when("Return to product search page")
+def return_product_page(context):
+    context.app.product_page.return_product_page()
+
+@when("Click cart button")
+def click_cart_button(context):
+    context.app.product_page.click_cart_button()
+
 @when("{expected_text} product added to shopping cart")
 def add_product_cart(context, expected_text):
     expected_text = int(expected_text)
     context.app.product_page.add_product_cart(expected_text)
 
-@when("Return to product search page")
-def return_product_search_page(context):
-    context.app.product_page.return_product_page()
+@when("Change quantity from {number_1} to {number_2}")
+def change_quantity(context, number_1, number_2):
+    context.app.product_page.change_quantity(number_1, number_2)
+    number_1 = int(number_1)
+    number_2 = int(number_2)
+
+@then("Try expect items in cart will be {items}")
+def expect_item_in_cart(context, items ):
+    context.app.product_page.expect_items_in_cart(items)
+    items = int(items)
+
 
 # @when("On search results page choose another product and click it")
 # def wait_until_new_windows_open(context):
@@ -88,6 +104,8 @@ def count_assert(context, step):
 def verify_product_in_cart(context, expected_text):
     # expected_text = int(expected_text)
     context.app.product_page.verify_product_in_cart(expected_text)
+
+
 
 # @then("Close all pop-ups")
 # def close_all_pop_ups(context):

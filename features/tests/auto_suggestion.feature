@@ -66,18 +66,23 @@ Feature: Auto-suggestion
   Given Open Homedepot page
   When Insert circular saw in search field
   And 1 product added to shopping cart
-#  And Return to product search page
+  And Return to product search page
 #  And On search results page choose another product and click it
   And Insert drill in search field
   And 1 product added to shopping cart
-  Then 1 product would be in cart
+  And Click cart button
+  Then Try expect items in cart will be 2
+#  Then Expect 2 Item
 #  Then Close all pop-ups
 
   Scenario: Shopping cart - Change quantity
-  Given Repeat step User is able to add an item to the Shopping Cart
-  When Click cart button
+  Given Open Homedepot page
+  When Insert circular saw in search field
+  And 1 product added to shopping cart
+  And Return to product search page
+  And Click cart button
   And Change quantity from 1 to 2
-  Then Expected items in cart will be 2
+  Then Try expect items in cart will be 2
 
   Scenario: User is able to write a review
   Given Open Homedepot page
